@@ -1,0 +1,22 @@
+async function sendMessage() {
+    let userInput = document.getElementById("user-input").value;
+    let chatBox = document.getElementById("chat-box");
+
+    // Show user's message
+    chatBox.innerHTML += `<div><strong>You:</strong> ${userInput}</div>`;
+
+    // Send request to AI ordering system (Backend API)
+    let response = await fetch("https://your-backend-api.onrender.com/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput })
+    });
+
+    let data = await response.json();
+
+    // Show AI response
+    chatBox.innerHTML += `<div><strong>AI:</strong> ${data.reply}</div>`;
+
+    // Clear input
+    document.getElementById("user-input").value = "";
+}
